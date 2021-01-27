@@ -14,7 +14,7 @@ on:
     - 'docs/**'
 
 jobs:
-  export:
+  root_fs:
     runs-on: ubuntu-latest
 
     steps:
@@ -56,7 +56,7 @@ jobs:
   build:
     runs-on: windows-latest
 
-    needs: [export, launcher]
+    needs: [root_fs, launcher]
 
     env:
       VERSION: ${{github.event.release.tag_name}}
