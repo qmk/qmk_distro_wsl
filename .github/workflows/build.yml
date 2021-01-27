@@ -72,7 +72,7 @@ jobs:
       - name: Create Installer
         shell: 'bash {0}'
         run: |
-          iscc install.iss //DMyAppVersion=${VERSION:-0.0.0}
+          iscc installer/install.iss //DMyAppVersion=${VERSION:-0.0.0}
           sha256sum .build/QMK_WSL.exe > .build/QMK_WSL.exe.sha256
 
       - uses: actions/upload-artifact@v2
