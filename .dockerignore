@@ -1,2 +1,5 @@
 .git
+.github
 .build
+docs
+installer
