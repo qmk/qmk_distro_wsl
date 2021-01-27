@@ -23,9 +23,9 @@ AppUpdatesURL={#MyAppURL}
 DefaultDirName={userappdata}\{#MyAppDir}
 DisableProgramGroupPage=yes
 PrivilegesRequired=lowest
-OutputDir=.build
+OutputDir=..\.build
 OutputBaseFilename={#MyAppDir}
-SetupIconFile=src\icon.ico
+SetupIconFile=icon.ico
 Compression=none
 SolidCompression=yes
 UninstallDisplayIcon={app}\icon.ico
@@ -38,8 +38,8 @@ Name: "english"; MessagesFile: "compiler:Default.isl"
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
 
 [Files]
-Source: "src\icon.ico"; DestDir: "{app}"; Flags: ignoreversion
-Source: ".build\*"; DestDir: "{app}"; Flags: ignoreversion
+Source: ".\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "..\.build\*"; DestDir: "{app}"; Flags: ignoreversion
 
 [RUN]
 Filename: "{app}\QMK.exe"; Parameters: "install"; StatusMsg: "Installing Distro..."; Flags: runhidden

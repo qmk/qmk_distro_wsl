@@ -14,7 +14,7 @@ on:
     - 'docs/**'
 
 jobs:
-  export:
+  root_fs:
     runs-on: ubuntu-latest
 
     steps:
@@ -56,7 +56,7 @@ jobs:
   build:
     runs-on: windows-latest
 
-    needs: [export, launcher]
+    needs: [root_fs, launcher]
 
     env:
       VERSION: ${{github.event.release.tag_name}}
@@ -72,7 +72,7 @@ jobs:
       - name: Create Installer
         shell: 'bash {0}'
         run: |
-          iscc install.iss //DMyAppVersion=${VERSION:-0.0.0}
+          iscc installer/install.iss //DMyAppVersion=${VERSION:-0.0.0}
           sha256sum .build/QMK_WSL.exe > .build/QMK_WSL.exe.sha256
 
       - uses: actions/upload-artifact@v2
