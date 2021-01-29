@@ -43,9 +43,6 @@ Source: "..\.build\*"; DestDir: "{app}"; Flags: ignoreversion
 
 [RUN]
 Filename: "{app}\QMK.exe"; Parameters: "install"; StatusMsg: "Installing Distro..."; Flags: runhidden
-Filename: "{app}\QMK.exe"; Parameters: "run ""useradd -m -g qmk -s /bin/bash  -p $(openssl passwd -1 'qmk') {%username|qmk}"""; StatusMsg: "Adding User..."; Flags: runhidden
-Filename: "{app}\QMK.exe"; Parameters: "config --default-user {%username|qmk}"; StatusMsg: "Configuring User..."; Flags: runhidden
-
 
 [UninstallRun]
 Filename: "{app}\QMK.exe"; Parameters: "clean -y"; StatusMsg: "Uninstalling Distro..."; Flags: runhidden; RunOnceId: "clean"
@@ -53,3 +50,56 @@ Filename: "{app}\QMK.exe"; Parameters: "clean -y"; StatusMsg: "Uninstalling Dist
 [Icons]
 Name: "{autoprograms}\{#MyAppName}"; Filename: "{app}\QMK.exe"; Parameters: ""; IconFilename: "{app}\icon.ico"
 Name: "{autodesktop}\{#MyAppName}"; Filename: "{app}\QMK.exe"; Parameters: ""; IconFilename: "{app}\icon.ico"; Tasks: desktopicon
+
+[Code]
+{ ///////////////////////////////////////////////////////////////////// }
+function GetUninstallString(): String;
+var
+  sUnInstPath: String;
+  sUnInstallString: String;
+begin
+  sUnInstPath := ExpandConstant('Software\Microsoft\Windows\CurrentVersion\Uninstall\{#emit SetupSetting("AppId")}_is1');
+  sUnInstallString := '';
+  if not RegQueryStringValue(HKLM, sUnInstPath, 'UninstallString', sUnInstallString) then
+    RegQueryStringValue(HKCU, sUnInstPath, 'UninstallString', sUnInstallString);
+  Result := sUnInstallString;
+end;
+{ ///////////////////////////////////////////////////////////////////// }
+function IsUpgrade(): Boolean;
+begin
+  Result := (GetUninstallString() <> '');
+end;
+{ ///////////////////////////////////////////////////////////////////// }
+function UnInstallOldVersion(): Integer;
+var
+  sUnInstallString: String;
+  iResultCode: Integer;
+begin
+{ Return Values: }
+{ 1 - uninstall string is empty }
+{ 2 - error executing the UnInstallString }
+{ 3 - successfully executed the UnInstallString }
+  { default return value }
+  Result := 0;
+  { get the uninstall string of the old app }
+  sUnInstallString := GetUninstallString();
+  if sUnInstallString <> '' then begin
+    sUnInstallString := RemoveQuotes(sUnInstallString);
+    if Exec(sUnInstallString, '/SILENT /NORESTART /SUPPRESSMSGBOXES','', SW_HIDE, ewWaitUntilTerminated, iResultCode) then
+      Result := 3
+    else
+      Result := 2;
+  end else
+    Result := 1;
+end;
+{ ///////////////////////////////////////////////////////////////////// }
+procedure CurStepChanged(CurStep: TSetupStep);
+begin
+  if (CurStep=ssInstall) then
+  begin
+    if (IsUpgrade()) then
+    begin
+      UnInstallOldVersion();
+    end;
+  end;
+end;

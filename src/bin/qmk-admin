@@ -1,0 +1,97 @@
+#! /usr/bin/env python3
+import os
+from dialog import Dialog
+from pathlib import Path
+
+
+# full path here as it *could* change filesystems between runs
+FIRST_RUN_FILE = Path.expanduser(Path("/home/qmk/.qmk_init_done"))
+
+# Patch in clear screen support
+Dialog.cls = lambda self: os.system('clear')
+
+d = Dialog(autowidgetsize=True)
+d.set_background_title('QMK Admin')
+d.add_persistent_args(['--no-lines', '--no-collapse', '--colors'])
+
+
+def menu_user():
+    _, tag = d.menu("""Set User Type
+Due to limitations with WSL2, access can be summarized as either:
+
+\Zb\Z1Linux  \Zn - fast but user files would be lost on upgrade (requires manual backup)
+\Zb\Z1Windows\Zn - extremely slow but user files are safe
+
+For more info see: https://docs.microsoft.com/en-us/windows/wsl/compare-versions
+""", choices=[('Linux', 'Fast but with risks'), ('Windows', 'Slow but safe')])
+    if not tag:
+        return False
+    elif tag == 'Linux':
+        home = '/home/qmk'
+    elif tag == 'Windows':
+        home = os.popen('wslupath -H').read().strip()
+
+    # cannot use usermod, due to 'user is currently used by process'
+    os.system('sudo sed -i "s|^qmk:.*|qmk:x:1000:1000::%s:/bin/bash|" /etc/passwd' % home)
+    return True
+
+
+def menu_update():
+    ans = d.yesno("Are you sure, this cannot be undone?")
+    if ans == 'ok':
+        # TODO: redirect text to d.programbox instead of showing raw output
+        d.cls()
+        os.system('sudo apt update')
+        os.system('sudo apt upgrade -y')
+        os.system('sudo python3 -m pip install qmk --upgrade')
+        d.msgbox("Complete!")
+
+
+def menu_reset():
+    ans = d.yesno("Are you sure?")
+    if ans == 'ok':
+        # TODO: implement 'hard' reset rather than just rerun init?
+        FIRST_RUN_FILE.unlink()
+
+
+def menu_init():
+    d.msgbox("""Welcome to QMK WSL!
+
+A few things need to be configured before you can get started...
+""")
+    tag = menu_user()
+    if not tag:
+        return True
+
+    FIRST_RUN_FILE.touch()
+    d.msgbox("Setup Complete!\n\nYou can access this tool again via \Zb\Z1'qmk-admin'\Zn\n\nThis terminal will now exit, reopen to continue.")
+    return False
+
+
+def menu_main():
+    _, tag = d.menu("Welcome to QMK WSL!",
+                    choices=[('1', 'Configure User'), ('2', 'Update System'), ('3', 'Reset Environment')])
+    if not tag:
+        return False
+    elif tag == '1':
+        menu_user()
+    elif tag == '2':
+        menu_update()
+    elif tag == '3':
+        menu_reset()
+
+    return True
+
+
+def menu():
+    if FIRST_RUN_FILE.exists():
+        return menu_main()
+    else:
+        return menu_init()
+
+
+if __name__ == "__main__":
+    while menu():
+        pass
+
+    d.cls()

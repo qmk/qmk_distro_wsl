@@ -104,7 +104,7 @@ jobs:
       - name: Run QMK cli
         shell: cmd
         run: |
-          %APPDATA%\QMK_WSL\QMK.exe run "qmk -h | grep 'CLI wrapper for running QMK commands'"
+          wsl -d QMK -u root -- bash -c "qmk -h | grep 'CLI wrapper for running QMK commands'"
 
   publish_release:
     runs-on: ubuntu-latest

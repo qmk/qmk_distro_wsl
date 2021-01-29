@@ -8,12 +8,12 @@ maybe_qmk_welcome () {
   echo "  * Documentation:    https://docs.qmk.fm"
   echo "  * Support:          https://discord.gg/Uq7gcHh"
 
-  if [ ! -f ~/.qmk_hide_welcome ]; then
+  if [ "$(qmk config user.hide_welcome | grep -c '=True')" == "0" ]; then
     echo ""
     echo "If you have not already done so,"
     echo -e "  run ${YELLOW}qmk setup${NC} to get started."
     echo -e "  run ${GREEN}qmk compile -kb <keyboard> -km default${NC} to start building."
-    echo -e "  run ${RED}touch ~/.qmk_hide_welcome${NC} to hide this message."
+    echo -e "  run ${RED}qmk config user.hide_welcome=True${NC} to hide this message."
   fi
 }
 
