@@ -1,6 +1,6 @@
 # QMK WSL
 
-![](icon.png)
+![](logo.png)
 
 > A pre-configured WSL distro for working with the QMK CLI
 
