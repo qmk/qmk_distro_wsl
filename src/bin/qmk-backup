@@ -1,6 +1,3 @@
 #!/bin/bash
 
-BACKUP_DIR=$(wslupath -H)/.qmk
-
-mkdir -p $BACKUP_DIR
-tar -zcvpf $BACKUP_DIR/qmk-wsl-backup.tar.gz /home/qmk
+tar -zcvpf $(wslupath -T)/qmk-wsl-backup.tar.gz /home/qmk
