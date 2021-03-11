@@ -1,0 +1,3 @@
+#!/bin/bash
+
+tar -zcvpf $(wslupath -T)/qmk-wsl-backup.tar.gz /home/qmk
