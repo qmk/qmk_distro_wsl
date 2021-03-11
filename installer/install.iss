@@ -45,7 +45,7 @@ Source: "..\.build\*"; DestDir: "{app}"; Flags: ignoreversion
 Filename: "{app}\QMK.exe"; Parameters: "install"; StatusMsg: "Installing Distro..."; Flags: runhidden
 
 [UninstallRun]
-Filename: "{app}\QMK.exe"; Parameters: "run ""qmk-backup"""; StatusMsg: "Backing Up User Data..."; Flags: runhidden; RunOnceId: "clean"
+Filename: "{app}\QMK.exe"; Parameters: "run ""qmk-backup"""; StatusMsg: "Backing Up User Data..."; Flags: runhidden; RunOnceId: "backup"
 Filename: "{app}\QMK.exe"; Parameters: "clean -y"; StatusMsg: "Uninstalling Distro..."; Flags: runhidden; RunOnceId: "clean"
 
 [Icons]
