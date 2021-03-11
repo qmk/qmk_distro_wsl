@@ -18,3 +18,6 @@ maybe_qmk_welcome () {
 }
 
 maybe_qmk_welcome
+
+# Fix initial directory on Windows Terminal
+cd ~
