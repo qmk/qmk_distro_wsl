@@ -9,7 +9,7 @@ Currently a limitation of WSL. The recommendation is to use [QMK Toolbox](https:
 Within the WSL shell, you can run the following command to start browsing
 
 ```console
-explorer.exe ~/qmk_firmware
+wstart ~/qmk_firmware
 ```
 
 ## More Coming Soon...
