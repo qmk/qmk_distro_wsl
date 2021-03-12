@@ -4,6 +4,7 @@ RUN apt update && apt install --no-install-recommends -y \
     vim \
     nano \
     curl \
+    cron \
     python3-dialog \
     sudo \
     gnupg2 \

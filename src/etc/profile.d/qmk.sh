@@ -21,3 +21,6 @@ maybe_qmk_welcome
 
 # Fix initial directory on Windows Terminal
 cd ~
+
+# Ensure cron is running
+sudo service cron start &> /dev/null
