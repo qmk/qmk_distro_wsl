@@ -1,3 +1,4 @@
 #!/bin/bash
 
+# TODO: update to rsync
 tar -zcvpf $(wslupath -T)/qmk-wsl-backup.tar.gz /home/qmk
