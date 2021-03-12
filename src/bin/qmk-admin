@@ -16,12 +16,12 @@ d.set_background_title('QMK Admin')
 d.add_persistent_args(['--no-lines', '--no-collapse', '--colors'])
 
 
-def menu_sync():
+def menu_backup():
     _, tag = d.menu("""Backup User Files
 
-With a Linux home directory, user files might be lost on upgrade.
+\Zb\Z1With a Linux home directory, user files might be lost on upgrade!\Zn
 
-As a workaround, you can optionally enable Periodic background backups
+As a workaround, you can optionally enable periodic backups:
 """, choices=[('1', 'Backup every 5 mins'), ('2', 'Manual')])
     if not tag:
         return False
@@ -46,7 +46,7 @@ For more info see: https://docs.microsoft.com/en-us/windows/wsl/compare-versions
         return False
     elif tag == 'Linux':
         home = '/home/qmk'
-        sync = menu_sync()
+        sync = menu_backup()
         if not sync:
             return False
     elif tag == 'Windows':
@@ -92,13 +92,13 @@ A few things need to be configured before you can get started...
 
 def menu_main():
     _, tag = d.menu("Welcome to QMK WSL!",
-                    choices=[('1', 'Configure User'), ('2', 'Configure Sync'), ('3', 'Update System'), ('4', 'Reset Environment')])
+                    choices=[('1', 'Configure User'), ('2', 'Configure Backup'), ('3', 'Update System'), ('4', 'Reset Environment')])
     if not tag:
         return False
     elif tag == '1':
         menu_user()
     elif tag == '2':
-        menu_sync()
+        menu_backup()
     elif tag == '3':
         menu_update()
     elif tag == '4':
