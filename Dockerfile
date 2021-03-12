@@ -7,6 +7,7 @@ RUN apt update && apt install --no-install-recommends -y \
     cron \
     python3-dialog \
     sudo \
+    rsync \
     gnupg2 \
     apt-transport-https \
     && rm -rf /var/lib/apt/lists/*

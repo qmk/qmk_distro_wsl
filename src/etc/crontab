@@ -7,4 +7,4 @@
 SHELL=/bin/sh
 PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
 
-* * * * * qmk /bin/qmk-backup
+*/5 * * * * qmk /bin/test -f /home/qmk/.qmk_backup_enable && /bin/qmk-backup

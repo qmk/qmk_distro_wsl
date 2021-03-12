@@ -5,7 +5,8 @@ from pathlib import Path
 
 
 # full path here as it *could* change filesystems between runs
-FIRST_RUN_FILE = Path.expanduser(Path("/home/qmk/.qmk_init_done"))
+FIRST_RUN_FILE = Path("/home/qmk/.qmk_init_done")
+BACKUP_ENABLE_FILE = Path("/home/qmk/.qmk_backup_enable")
 
 # Patch in clear screen support
 Dialog.cls = lambda self: os.system('clear')
@@ -15,11 +16,28 @@ d.set_background_title('QMK Admin')
 d.add_persistent_args(['--no-lines', '--no-collapse', '--colors'])
 
 
+def menu_sync():
+    _, tag = d.menu("""Backup User Files
+
+With a Linux home directory, user files might be lost on upgrade.
+
+As a workaround, you can optionally enable Periodic background backups
+""", choices=[('1', 'Backup every 5 mins'), ('2', 'Manual')])
+    if not tag:
+        return False
+    elif tag == '1':
+        BACKUP_ENABLE_FILE.touch()
+    elif tag == '2':
+        if BACKUP_ENABLE_FILE.exists():
+            BACKUP_ENABLE_FILE.unlink()
+    return True
+
+
 def menu_user():
     _, tag = d.menu("""Set User Type
 Due to limitations with WSL2, access can be summarized as either:
 
-\Zb\Z1Linux  \Zn - fast but user files would be lost on upgrade (requires manual backup)
+\Zb\Z1Linux  \Zn - fast but user files might be lost on upgrade
 \Zb\Z1Windows\Zn - extremely slow but user files are safe
 
 For more info see: https://docs.microsoft.com/en-us/windows/wsl/compare-versions
@@ -28,11 +46,15 @@ For more info see: https://docs.microsoft.com/en-us/windows/wsl/compare-versions
         return False
     elif tag == 'Linux':
         home = '/home/qmk'
+        sync = menu_sync()
+        if not sync:
+            return False
     elif tag == 'Windows':
         home = os.popen('wslupath -H').read().strip()
 
     # cannot use usermod, due to 'user is currently used by process'
-    os.system('sudo sed -i "s|^qmk:.*|qmk:x:1000:1000::%s:/bin/bash|" /etc/passwd' % home)
+    os.system(
+        'sudo sed -i "s|^qmk:.*|qmk:x:1000:1000::%s:/bin/bash|" /etc/passwd' % home)
     return True
 
 
@@ -70,14 +92,16 @@ A few things need to be configured before you can get started...
 
 def menu_main():
     _, tag = d.menu("Welcome to QMK WSL!",
-                    choices=[('1', 'Configure User'), ('2', 'Update System'), ('3', 'Reset Environment')])
+                    choices=[('1', 'Configure User'), ('2', 'Configure Sync'), ('3', 'Update System'), ('4', 'Reset Environment')])
     if not tag:
         return False
     elif tag == '1':
         menu_user()
     elif tag == '2':
-        menu_update()
+        menu_sync()
     elif tag == '3':
+        menu_update()
+    elif tag == '4':
         menu_reset()
 
     return True

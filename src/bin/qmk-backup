@@ -1,6 +1,4 @@
-#! /usr/bin/env python3
-import os
-#from pathlib import Path
+#!/bin/bash
 
-os.system('tar -zcvpf $(wslupath -T)/qmk-wsl-backup.tar.gz /home/qmk')
-#Path("/tmp/" + str(os.getpid())).touch()
+# TODO: update to rsync
+tar -zcvpf $(wslupath -T)/qmk-wsl-backup.tar.gz /home/qmk
