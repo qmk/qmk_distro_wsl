@@ -2,7 +2,7 @@
 
 ## Why can't I flash my keyboard from within WSL?
 
-Currently a limitation of WSL, however workarounds have been included for flashing the following:
+While currently a limitation of WSL, workarounds have been included for flashing the following:
 
 * dfu-util
 * dfu-programmer
