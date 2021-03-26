@@ -1,0 +1,2 @@
+#!/bin/bash
+teensy_loader_cli.exe "$@"

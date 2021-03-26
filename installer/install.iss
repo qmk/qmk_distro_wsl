@@ -22,7 +22,8 @@ AppSupportURL={#MyAppURL}
 AppUpdatesURL={#MyAppURL}
 DefaultDirName={userappdata}\{#MyAppDir}
 DisableProgramGroupPage=yes
-PrivilegesRequired=lowest
+; Uncomment the following line to run in non administrative install mode (install for current user only.)
+;PrivilegesRequired=lowest
 OutputDir=..\.build
 OutputBaseFilename={#MyAppDir}
 SetupIconFile=icon.ico
@@ -39,10 +40,12 @@ Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{
 
 [Files]
 Source: ".\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "..\drivers\*"; DestDir: {tmp}; Flags: deleteafterinstall
 Source: "..\.build\*"; DestDir: "{app}"; Flags: ignoreversion
 
-[RUN]
+[Run]
 Filename: "{app}\QMK.exe"; Parameters: "install"; StatusMsg: "Installing Distro..."; Flags: runhidden
+Filename: "{tmp}\qmk_driver_installer.exe"; WorkingDir: "{tmp}"; Parameters: " --all --force drivers.txt"; StatusMsg: "Installing Drivers..."; Flags: runhidden
 
 [UninstallRun]
 Filename: "{app}\QMK.exe"; Parameters: "run ""qmk-backup"""; StatusMsg: "Backing Up User Data..."; Flags: runhidden; RunOnceId: "backup"
