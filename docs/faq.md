@@ -2,7 +2,14 @@
 
 ## Why can't I flash my keyboard from within WSL?
 
-Currently a limitation of WSL. The recommendation is to use [QMK Toolbox](https://github.com/qmk/qmk_toolbox) to work round the issue.
+Currently a limitation of WSL, however workarounds have been included for flashing the following:
+
+* dfu-util
+* dfu-programmer
+* bootloadHid
+* teensy-loader-cli
+
+The recommendation is to use [QMK Toolbox](https://github.com/qmk/qmk_toolbox) for all other supported flashing methods.
 
 ## How can I access my firmware files?
 
