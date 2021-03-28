@@ -23,11 +23,16 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    - name: Build the Docker image
+    - name: Populate config
       run: |
-        docker build --build-arg BUILD_SHA=$GITHUB_SHA --build-arg BUILD_VERSION=$VERSION -t qmkfm/qmk_distro_wsl .
+        echo "VERSION_ID=$GITHUB_SHA" >> src/etc/qmk-release
+        echo "VERSION=${VERSION:-2.0.0}" >> src/etc/qmk-release
 
-    - name: Export the Docker image
+    - name: Build Docker image
+      run: |
+        docker build -t qmkfm/qmk_distro_wsl .
+
+    - name: Export Docker image
       run: |
         docker export $(docker create qmkfm/qmk_distro_wsl:latest) | gzip > .build/install.tar.gz
 
