@@ -16,7 +16,7 @@ d.set_background_title('QMK Admin')
 d.add_persistent_args(['--no-lines', '--no-collapse', '--colors'])
 
 
-def menu_backup():
+def menu_configure_backup():
     _, tag = d.menu("""Backup User Files
 
 \Zb\Z1With a Linux home directory, user files might be lost on upgrade!\Zn
@@ -33,6 +33,14 @@ As a workaround, you can optionally enable periodic backups:
     return True
 
 
+def menu_backup_now():
+    os.system('qmk-backup')
+
+
+def menu_backup_restore():
+    os.system('qmk-backup --restore')
+
+
 def menu_user():
     _, tag = d.menu("""Set User Type
 Due to limitations with WSL2, file access can be summarized as either:
@@ -46,7 +54,7 @@ For more info see: https://docs.microsoft.com/en-us/windows/wsl/compare-versions
         return False
     elif tag == 'Linux':
         home = '/home/qmk'
-        sync = menu_backup()
+        sync = menu_configure_backup()
         if not sync:
             return False
     elif tag == 'Windows':
@@ -73,7 +81,23 @@ def menu_reset():
     ans = d.yesno("Are you sure?")
     if ans == 'ok':
         # TODO: implement 'hard' reset rather than just rerun init?
-        FIRST_RUN_FILE.unlink()
+        if FIRST_RUN_FILE.exists():
+            FIRST_RUN_FILE.unlink()
+
+
+def menu_backup():
+    _, tag = d.menu("Backup User Files",
+                    choices=[('1', 'Configure Backup'), ('2', 'Perform Backup'), ('3', 'Restore Backup')])
+    if not tag:
+        return False
+    elif tag == '1':
+        menu_configure_backup()
+    elif tag == '2':
+        menu_backup_now()
+    elif tag == '3':
+        menu_backup_restore()
+
+    return True
 
 
 def menu_init():
@@ -92,7 +116,7 @@ A few things need to be configured before you can get started...
 
 def menu_main():
     _, tag = d.menu("Welcome to QMK WSL!",
-                    choices=[('1', 'Configure User'), ('2', 'Configure Backup'), ('3', 'Update System'), ('4', 'Reset Environment')])
+                    choices=[('1', 'Configure User'), ('2', 'Backup/Restore'), ('3', 'Update System'), ('4', 'Reset Environment')])
     if not tag:
         return False
     elif tag == '1':
