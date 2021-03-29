@@ -22,7 +22,7 @@ def menu_backup():
 \Zb\Z1With a Linux home directory, user files might be lost on upgrade!\Zn
 
 As a workaround, you can optionally enable periodic backups:
-""", choices=[('1', 'Backup every 5 mins'), ('2', 'Manual')])
+""", choices=[('1', '\Zb\Z2Recommended\Zn - Backup every 5 mins'), ('2', 'Manual')])
     if not tag:
         return False
     elif tag == '1':
@@ -35,13 +35,13 @@ As a workaround, you can optionally enable periodic backups:
 
 def menu_user():
     _, tag = d.menu("""Set User Type
-Due to limitations with WSL2, access can be summarized as either:
+Due to limitations with WSL2, file access can be summarized as either:
 
-\Zb\Z1Linux  \Zn - fast but user files might be lost on upgrade
-\Zb\Z1Windows\Zn - extremely slow but user files are safe
+Linux   - fast but files are isolated and \Zb\Z1might be lost\Zn if not careful
+Windows - \Zb\Z1extremely slow\Zn but files are generally safer
 
 For more info see: https://docs.microsoft.com/en-us/windows/wsl/compare-versions
-""", choices=[('Linux', 'Fast but with risks'), ('Windows', 'Slow but safe')])
+""", choices=[('Linux', '\Zb\Z2Recommended\Zn but with risks'), ('Windows', 'Slow but safe')])
     if not tag:
         return False
     elif tag == 'Linux':

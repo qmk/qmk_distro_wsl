@@ -30,4 +30,31 @@ Within the WSL shell, you can run the following command to start browsing
 wstart ~/qmk_firmware
 ```
 
+## Why is `<action>` so slow?
+
+Due to limitations with WSL2, file access can be summarized as either:
+
+* Linux - fast but files are isolated and **might be lost** if not careful
+* Windows - **extremely slow** but files are generally safer
+
+**Linux** is the recommended user (or QMK) home directory option with automatic backups enabled.
+
+This can re-configured with the 'Configure User' and 'Configure Backup' items within the `qmk-admin` TUI.
+
+Or, when running `qmk setup`, ensure that it is located inside the WSL instance instead of the Windows filesystem (ie. not in /mnt) with the `-H` option. 
+
+For more info see: https://docs.microsoft.com/en-us/windows/wsl/compare-versions
+
+## How do I keep my environment up to date?
+
+Periodic updates will be available to cover both major OS, and QMK CLI updates. Installing the [most recent release](https://github.com/qmk/qmk_distro_wsl/releases/latest) will ensure you have the latest requirements to build QMK firmware.
+
+Interim updates have to be performed manually. This can done with the 'Update System' item within the `qmk-admin` TUI or by running the following commands:
+
+```console
+sudo apt update
+sudo apt upgrade -y
+sudo python3 -m pip install qmk --upgrade
+```
+
 ## More Coming Soon...

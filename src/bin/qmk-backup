@@ -1,4 +1,15 @@
-#!/bin/bash
+#! /usr/bin/env python3
+import os
+import argparse
 
-# TODO: update to rsync
-tar -zcvpf $(wslupath -T)/qmk-wsl-backup.tar.gz /home/qmk
+parser = argparse.ArgumentParser()
+parser.add_argument('-r', '--restore', action='store_true')
+parser.add_argument('-l', '--location', default=os.popen('wslupath -H').read().strip())
+
+args = parser.parse_args()
+
+if args.restore:
+    print("TODO")
+else:
+    # TODO: update to rsync
+    os.system('tar -zcvpf %s/qmk-wsl-backup.tar.gz /home/qmk' % args.location)
