@@ -1,12 +1,12 @@
 # QMK WSL
 
-![](logo.png)
+![](images/logo.png)
 
 > A pre-configured WSL distro for working with the QMK CLI
 
 [![Latest Release](https://img.shields.io/github/v/release/qmk/qmk_distro_wsl?color=3D87CE&label=Latest&sort=semver&style=for-the-badge)](https://github.com/qmk/qmk_distro_wsl/releases/latest)
 
-![](terminal.png)
+![](images/terminal.png)
 
 ## TOC
 

@@ -20,7 +20,7 @@ Files within the WSL filesystem can be flashed directly by using
 
 For example,
 
-![toolbox](wsl_toolbox.png)
+![toolbox](images/wsl_toolbox.png)
 
 ## How can I access my firmware files?
 
