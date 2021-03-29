@@ -19,17 +19,17 @@ d.add_persistent_args(['--no-lines', '--no-collapse', '--colors'])
 def menu_configure_backup():
     _, tag = d.menu("""Backup User Files
 
-\Zb\Z1With a Linux home directory, user files might be lost on upgrade!\Zn
+\Zb\Z1With a Linux home directory, user files might be lost if not careful!\Zn
 
 As a workaround, you can optionally enable periodic backups:
-""", choices=[('1', '\Zb\Z2Recommended\Zn - Backup every 5 mins'), ('2', 'Manual')])
+""", choices=[('1', 'Manual - Data still backed up on distro uninstall/upgrade'), ('2', '\Zb\Z2Recommended for new users\Zn - Backup every 15 mins')])
     if not tag:
         return False
     elif tag == '1':
-        BACKUP_ENABLE_FILE.touch()
-    elif tag == '2':
         if BACKUP_ENABLE_FILE.exists():
             BACKUP_ENABLE_FILE.unlink()
+    elif tag == '2':
+        BACKUP_ENABLE_FILE.touch()
     return True
 
 
