@@ -2,15 +2,19 @@
 
 1. Install [WSL2](https://docs.microsoft.com/en-us/windows/wsl/install-win10)  
 1. Install the [latest release](https://github.com/qmk/qmk_distro_wsl/releases/latest)  
-![](install.png)
+![](images/install.png)
 1. Open the `QMK WSL` shortcut  
-![](shortcut.png)
+![](images/shortcut.png)
+1. Complete the first start wizard  
+![](images/quickstart_1.png)
+![](images/quickstart_2.png)
+![](images/quickstart_3.png)
 1. Run [`qmk setup`](https://docs.qmk.fm/#/newbs_getting_started?id=set-up-qmk)  
-![](setup.png)
+![](images/setup.png)
 1. Run [`qmk compile`](https://docs.qmk.fm/#/newbs_getting_started?id=_4-test-your-build-environment)  
-![](compile.png)
+![](images/compile.png)
 1. Profit!  
-![](finish.png)
+![](images/finish.png)
 
 ## Next Steps
 
