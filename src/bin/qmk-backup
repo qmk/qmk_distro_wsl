@@ -18,5 +18,5 @@ backup_folder = args.location
 if args.restore:
     os.system(f'tar -xvf {backup_folder}/qmk-wsl-backup.tar.xz -C {BACKUP_SRC}')
 else:
-    os.system(f'tar --sort=name -C {BACKUP_SRC} -cvpf /tmp/qmk-wsl-backup.tar.xz  --use-compress-program="xz -3T0" ./')
-    os.system(f'rsync -avAXW /tmp/qmk-wsl-backup.tar.xz {backup_folder}/')
+    os.system(f'tar --sort=name -C {BACKUP_SRC} -cvpf /tmp/qmk-wsl-backup.tar.xz  --use-compress-program="xz -1T{os.cpu_count()//2}" ./')
+    os.system(f'rsync --checksum -avAXW /tmp/qmk-wsl-backup.tar.xz {backup_folder}/')
