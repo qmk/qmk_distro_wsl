@@ -11,3 +11,18 @@ Found something that is broken or could be improved?
 The best place to get quick support is going to be on our [Discord](https://discord.gg/Uq7gcHh). There is usually somebody online, and there are a bunch of very helpful people there.
 
 Otherwise raise an issue at <https://github.com/qmk/qmk_distro_wsl/issues>, with any details you can provide.
+
+## Documentation
+
+Want to improve the documentation?
+
+Powered by vuepress, and hosted on GitHub Pages, you can request changes by making a fork and pull request.
+
+### Previewing the Documentation
+
+Before opening a pull request, you can preview your changes with the following command:
+
+```console
+yarn install
+yarn serve
+```
