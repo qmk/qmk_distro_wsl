@@ -58,3 +58,7 @@ sudo python3 -m pip install qmk --upgrade
 ```
 
 ## More Coming Soon...
+
+::: tip Need help with something?
+The best place to get quick support is going to be on our [Discord](https://discord.gg/Uq7gcHh). There is usually somebody online, and there are a bunch of very helpful people there.
+:::

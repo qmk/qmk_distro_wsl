@@ -1,0 +1,37 @@
+name: Generate Docs
+
+on:
+  push:
+    branches:
+    - main
+
+  pull_request:
+    paths:
+    - 'docs/**'
+    - '.github/workflows/docs.yml'
+    - 'package.json'
+    - 'yarn.lock'
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - uses: actions/setup-node@v2
+
+    - name: Build docs
+      run: |
+        yarn install
+        yarn build
+
+    - name: Deploy
+      if: ${{ github.event_name != 'pull_request' }}
+      uses: JamesIves/github-pages-deploy-action@3.7.1
+      with:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        BASE_BRANCH: main
+        BRANCH: gh-pages
+        FOLDER: .build/docs
+        GIT_CONFIG_EMAIL: hello@qmk.fm
