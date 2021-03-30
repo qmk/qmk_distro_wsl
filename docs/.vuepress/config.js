@@ -10,7 +10,7 @@ module.exports = {
     themeConfig: {
         nav: [
             { text: 'Discord', link: 'https://discord.gg/Uq7gcHh' },
-            { text: 'GitHub', link: 'https://github.com/qmk/qmk_distro_msys' }
+            { text: 'GitHub', link: 'https://github.com/qmk/qmk_distro_wsl' }
         ],
         logo: '/logo.png',
         search: false,
