@@ -1,0 +1,15 @@
+{
+  "name": "qmk_distro_wsl",
+  "description": "A pre-configured WSL distro for working with the QMK CLI",
+  "repository": "git@github.com:qmk/qmk_distro_wsl.git",
+  "author": "zvecr <git@zvecr.com>",
+  "license": "GPL-3.0",
+  "devDependencies": {
+    "vuepress": "^1.7.1",
+    "vuepress-plugin-medium-zoom": "^1.1.9"
+  },
+  "scripts": {
+    "serve": "vuepress dev docs",
+    "build": "vuepress build docs"
+  }
+}
