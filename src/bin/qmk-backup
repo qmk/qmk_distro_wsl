@@ -1,7 +1,6 @@
 #! /usr/bin/env python3
 import os
 import argparse
-from pathlib import Path
 
 TEMP_DIR = os.popen('wslupath -T').read().strip()
 
@@ -15,12 +14,9 @@ parser.add_argument('-l', '--location', default=BACKUP_DEST)
 args = parser.parse_args()
 
 backup_folder = args.location
-first_run = not (Path(BACKUP_SRC) / 'qmk_firmware').exists()
 
 if args.restore:
-    os.system(f'cp -rfT {backup_folder} {BACKUP_SRC}/')
+    os.system(f'tar -xvf {backup_folder}/qmk-wsl-backup.tar.xz -C {BACKUP_SRC}')
 else:
-    if first_run:
-        os.system(f'cp -rfT {BACKUP_SRC} {backup_folder}/')
-    else:
-        os.system(f'rsync -avAXW --delete {BACKUP_SRC}/ {backup_folder}')
+    os.system(f'tar -C {BACKUP_SRC} -Jcvpf /tmp/qmk-wsl-backup.tar.xz ./')
+    os.system(f'rsync -avAXW /tmp/qmk-wsl-backup.tar.xz {backup_folder}/')
