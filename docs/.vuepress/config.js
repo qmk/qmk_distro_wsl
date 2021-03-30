@@ -1,6 +1,7 @@
 module.exports = {
     dest: '.build/docs',
     temp: '.build/temp',
+    base: '/qmk_distro_wsl/',
     head: [
         ['link', { rel: 'icon', href: '/logo.png' }]
     ],
