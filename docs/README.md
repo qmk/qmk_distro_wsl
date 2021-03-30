@@ -10,7 +10,7 @@ footer: This project is maintained by QMK collaborators and contributors like yo
   <a class="button secondary" href="https://github.com/qmk/qmk_distro_wsl/releases/latest">Latest Version ↓</a>
 </p>
 
-A pre-configured WSL distro for working with the QMK CLI
+Based on the exact same environment as QMK uses for CI, this installer package aims to give you a QMK build environment with as little effort as possible.
 
 <img :src="$withBase('/terminal.png')" alt="terminal example" style="display: block; margin: 0 auto;">
 
