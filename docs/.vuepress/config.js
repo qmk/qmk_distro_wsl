@@ -7,7 +7,9 @@ module.exports = {
     ],
     title: 'QMK WSL',
     description: 'A pre-configured WSL distro for working with the QMK CLI',
+    theme: 'default-prefers-color-scheme',
     themeConfig: {
+        overrideTheme: 'dark',
         nav: [
             { text: 'Discord', link: 'https://discord.gg/Uq7gcHh' },
             { text: 'GitHub', link: 'https://github.com/qmk/qmk_distro_wsl' }
