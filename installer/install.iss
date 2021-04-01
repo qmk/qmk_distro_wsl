@@ -36,7 +36,8 @@ ArchitecturesInstallIn64BitMode=x64
 Name: "english"; MessagesFile: "compiler:Default.isl"
 
 [Tasks]
-Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
+Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "Other tasks:"; Flags: unchecked
+Name: "installdrivers"; Description: "Install drivers"; GroupDescription: "Other tasks:"
 
 [Files]
 Source: ".\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
@@ -45,7 +46,7 @@ Source: "..\.build\*"; DestDir: "{app}"; Flags: ignoreversion
 
 [Run]
 Filename: "{app}\QMK.exe"; Parameters: "install"; StatusMsg: "Installing Distro..."; Flags: runhidden
-Filename: "{tmp}\qmk_driver_installer.exe"; WorkingDir: "{tmp}"; Parameters: " --all --force drivers.txt"; StatusMsg: "Installing Drivers..."; Flags: runhidden
+Filename: "{tmp}\qmk_driver_installer.exe"; WorkingDir: "{tmp}"; Parameters: " --all --force drivers.txt"; StatusMsg: "Installing Drivers..."; Tasks: installdrivers; Flags: runhidden
 
 [UninstallRun]
 Filename: "{app}\QMK.exe"; Parameters: "run ""qmk-backup"""; StatusMsg: "Backing Up User Data..."; Flags: runhidden; RunOnceId: "backup"
