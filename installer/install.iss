@@ -37,7 +37,7 @@ Name: "english"; MessagesFile: "compiler:Default.isl"
 
 [Tasks]
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "Other tasks:"; Flags: unchecked
-Name: "installdrivers"; Description: "Install drivers"; GroupDescription: "Other tasks:"; Flags: checked
+Name: "installdrivers"; Description: "Install drivers"; GroupDescription: "Other tasks:"
 
 [Files]
 Source: ".\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
