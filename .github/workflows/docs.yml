@@ -32,4 +32,5 @@ jobs:
       with:
         branch: gh-pages
         folder: .build/docs
+        git-config-name: QMK Bot
         git-config-email: hello@qmk.fm
