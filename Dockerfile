@@ -18,8 +18,10 @@ RUN wget -O - https://access.patrickwu.space/wslu/public.asc | sudo apt-key add 
     echo "deb https://access.patrickwu.space/wslu/debian buster main" | sudo tee -a /etc/apt/sources.list && \
     apt-get update && apt-get install --no-install-recommends -y  wslu
 
-RUN chmod -R 0755 /etc/sudoers.d && chmod -R 0440 /etc/sudoers.d/*
 RUN groupadd qmk && \
     useradd -m -g qmk -s /bin/qmk-admin -p $(openssl passwd -1 'qmk') qmk
 
 COPY src /
+
+RUN chmod -R 0755 /etc/sudoers.d && chmod -R 0440 /etc/sudoers.d/* && \
+    chown -R qmk:qmk /home/qmk

@@ -1,5 +1,8 @@
+.build
 .git
 .github
-.build
+.vscode
 docs
+drivers
 installer
+node_modules
