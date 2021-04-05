@@ -1,13 +1,11 @@
 #! /usr/bin/env python3
 import os
-import sys
 from dialog import Dialog
 from pathlib import Path
 
 
 # full path here as it *could* change filesystems between runs
-FIRST_RUN_FILE = Path("/home/qmk/.qmk_init_done")
-BACKUP_ENABLE_FILE = Path("/home/qmk/.qmk_backup_enable")
+BACKUP_DOT_FILE = Path("/home/qmk/.qmk_backup_enable")
 
 # Patch in clear screen support
 Dialog.cls = lambda self: os.system('clear')
@@ -17,20 +15,20 @@ d.set_background_title('QMK Admin')
 d.add_persistent_args(['--no-lines', '--no-collapse', '--colors'])
 
 
-def menu_configure_backup():
+def menu_backup_enable():
     _, tag = d.menu("""Backup User Files
 
-\Zb\Z1With a Linux home directory, user files might be lost if not careful!\Zn
+\Zb\Z1User files within the Linux filesystem might be lost if not careful!\Zn
 
 As a workaround, you can optionally enable periodic backups:
 """, choices=[('1', 'Manual - Data still backed up on distro uninstall/upgrade'), ('2', '\Zb\Z2Recommended for new users\Zn - Backup every 15 mins')])
     if not tag:
         return False
     elif tag == '1':
-        if BACKUP_ENABLE_FILE.exists():
-            BACKUP_ENABLE_FILE.unlink()
+        if BACKUP_DOT_FILE.exists():
+            BACKUP_DOT_FILE.unlink()
     elif tag == '2':
-        BACKUP_ENABLE_FILE.touch()
+        BACKUP_DOT_FILE.touch()
     return True
 
 
@@ -40,31 +38,6 @@ def menu_backup_now():
 
 def menu_backup_restore():
     os.system('qmk-backup --restore')
-
-
-def menu_user():
-    _, tag = d.menu("""Set User Type
-Due to limitations with WSL2, file access can be summarized as either:
-
-Linux   - fast but files are isolated and \Zb\Z1might be lost\Zn if not careful
-Windows - \Zb\Z1extremely slow\Zn but files are generally safer
-
-For more info see: https://docs.microsoft.com/en-us/windows/wsl/compare-versions
-""", choices=[('Linux', '\Zb\Z2Recommended\Zn but with risks'), ('Windows', 'Slow but safe')])
-    if not tag:
-        return False
-    elif tag == 'Linux':
-        home = '/home/qmk'
-        sync = menu_configure_backup()
-        if not sync:
-            return False
-    elif tag == 'Windows':
-        home = os.popen('wslupath -H').read().strip()
-
-    # cannot use usermod, due to 'user is currently used by process'
-    os.system(
-        'sudo sed -i "s|^qmk:.*|qmk:x:1000:1000::%s:/bin/bash|" /etc/passwd' % home)
-    return True
 
 
 def menu_update():
@@ -78,21 +51,13 @@ def menu_update():
         d.msgbox("Complete!")
 
 
-def menu_reset():
-    ans = d.yesno("Are you sure?")
-    if ans == 'ok':
-        # TODO: implement 'hard' reset rather than just rerun init?
-        if FIRST_RUN_FILE.exists():
-            FIRST_RUN_FILE.unlink()
-
-
 def menu_backup():
     _, tag = d.menu("Backup User Files",
                     choices=[('1', 'Configure Backup'), ('2', 'Perform Backup'), ('3', 'Restore Backup')])
     if not tag:
         return False
     elif tag == '1':
-        menu_configure_backup()
+        menu_backup_enable()
     elif tag == '2':
         menu_backup_now()
     elif tag == '3':
@@ -101,50 +66,21 @@ def menu_backup():
     return True
 
 
-def menu_init():
-    d.msgbox("""Welcome to QMK WSL!
-
-A few things need to be configured before you can get started...
-""")
-    tag = menu_user()
-    if not tag:
-        return True
-
-    FIRST_RUN_FILE.touch()
-    d.msgbox("Setup Complete!\n\nYou can access this tool again via \Zb\Z1'qmk-admin'\Zn\n\nThis terminal will now exit, reopen to continue.")
-    return False
-
-
 def menu_main():
     _, tag = d.menu("Welcome to QMK WSL!",
-                    choices=[('1', 'Configure User'), ('2', 'Backup/Restore'), ('3', 'Update System'), ('4', 'Reset Environment')])
+                    choices=[('1', 'Backup/Restore'), ('2', 'Update System')])
     if not tag:
         return False
     elif tag == '1':
-        menu_user()
-    elif tag == '2':
         menu_backup()
-    elif tag == '3':
+    elif tag == '2':
         menu_update()
-    elif tag == '4':
-        menu_reset()
 
     return True
 
 
-def menu():
-    if FIRST_RUN_FILE.exists():
-        return menu_main()
-    else:
-        return menu_init()
-
-
 if __name__ == "__main__":
-    if "-c" in sys.argv:
-        ret = os.system('bash -c "%s"' % " ".join(sys.argv[2:]))
-        exit(ret)
-
-    while menu():
+    while menu_main():
         pass
 
     d.cls()
