@@ -1,22 +1,27 @@
 FROM qmkfm/base_container
 
 RUN apt-get update && apt-get install --no-install-recommends -y \
-    vim \
-    nano \
-    curl \
     cron \
+    curl \
+    less \
+    locales \
+    nano \
+    procps \
     python3-dialog \
-    sudo \
     rsync \
+    sudo \
+    vim \
     gnupg2 \
     apt-transport-https \
     && rm -rf /var/lib/apt/lists/*
+
+RUN update-locale LANG=C.UTF-8
 
 RUN python3 -m pip install --upgrade milc qmk 
 
 RUN wget -O - https://access.patrickwu.space/wslu/public.asc | sudo apt-key add - && \
     echo "deb https://access.patrickwu.space/wslu/debian buster main" | sudo tee -a /etc/apt/sources.list && \
-    apt-get update && apt-get install --no-install-recommends -y  wslu
+    apt-get update && apt-get install --no-install-recommends -y wslu
 
 RUN groupadd qmk && \
     useradd -m -g qmk -s /bin/qmk-admin -p $(openssl passwd -1 'qmk') qmk
