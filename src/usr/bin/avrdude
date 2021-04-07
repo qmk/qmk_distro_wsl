@@ -2,7 +2,7 @@
 
 # Default conf location is different on windows - force unless the user has already done so
 if [[ "$*" != *-C* ]]; then
-    EXTRA_ARGS=" -C /etc/avrdude.conf"
+    EXTRA_ARGS=" -C $(wslpath -m /etc/avrdude.conf)"
 fi
 
 avrdude.exe $EXTRA_ARGS "$@"
