@@ -1,0 +1,83 @@
+#! /usr/bin/env python3
+import os
+import subprocess
+from fuzzywuzzy import fuzz
+from fuzzywuzzy import process
+from dialog import Dialog
+
+# Patch in clear screen support
+Dialog.cls = lambda self: os.system('clear')
+
+d = Dialog(autowidgetsize=True)
+d.set_background_title('QMK Wizard')
+d.add_persistent_args(['--no-collapse', '--colors'])
+
+max_height, max_width = Dialog().maxsize()
+max_height //= 1.5
+max_width //= 1.5
+
+
+fork = 'qmk/qmk_firmware'
+_, fork = d.inputbox("""\ZbUse Your Fork?\ZB
+
+\Z2New users should accept the default\Zn
+
+For more info,
+\Z1https://docs.qmk.fm/#/getting_started_github\Zn
+""", init="qmk/qmk_firmware", nocancel=True)
+
+ret = subprocess.Popen(f"qmk --no-color setup -y {fork}", shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).stdout
+d.programbox(text="\ZbRunning Setup...\ZB", fd=ret.fileno(),
+             height=int(max_height), width=int(max_width))
+
+ret = d.yesno("""\ZbConfigure defaults?\ZB
+
+This can always be done at a later date,
+\Z1https://docs.qmk.fm/#/newbs_getting_started\Zn
+""", defaultno=True)
+if ret != Dialog.OK:
+    exit(0)
+
+keyboards = os.popen('qmk list-keyboards').read().split()
+
+kb = None
+km = None
+while not kb or not km:
+    ret, term = d.inputbox("""\ZbSearch for existing Keyboard...\Zn
+
+*supports partial matches*
+
+For example:
+  planck
+  clueboard
+""")
+    if ret != Dialog.OK:
+        exit(1)
+    if len(term) < 1:
+        continue
+
+    x = process.extractBests(term, keyboards, limit=10, score_cutoff=60)
+    found_items = [(str(i), v[0]) for i, v in enumerate(x)]
+    ret, index = d.menu("Keyboard?", menu_height=10, choices=found_items)
+    if ret != Dialog.OK:
+        continue
+
+    kb = found_items[int(index)][1]
+
+    keymaps = os.popen(f'qmk list-keymaps -kb {kb}').read().split()
+
+    # TODO: better sort of defaults to front of list
+    defaults = [x for x in keymaps if x.startswith("default")]
+    others = [x for x in keymaps if not x.startswith("default")]
+    keymaps = [*defaults, *others]
+
+    keymaps_items = [(str(i), v) for i, v in enumerate(keymaps)]
+
+    ret, index = d.menu("Keymap?", menu_height=10, choices=keymaps_items)
+    if ret != Dialog.OK:
+        continue
+    km = keymaps[int(index)]
+
+# Finally push those default values out
+os.system(f'qmk config user.keyboard={kb}')
+os.system(f'qmk config user.keymap={km}')

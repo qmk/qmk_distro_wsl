@@ -8,6 +8,7 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
     nano \
     procps \
     python3-dialog \
+    python3-fuzzywuzzy \
     rsync \
     sudo \
     vim \
@@ -24,7 +25,7 @@ RUN wget -O - https://access.patrickwu.space/wslu/public.asc | sudo apt-key add 
     apt-get update && apt-get install --no-install-recommends -y wslu
 
 RUN groupadd qmk && \
-    useradd -m -g qmk -s /bin/qmk-admin -p $(openssl passwd -1 'qmk') qmk
+    useradd -m -g qmk -s /bin/bash -p $(openssl passwd -1 'qmk') qmk
 
 COPY src /
 
