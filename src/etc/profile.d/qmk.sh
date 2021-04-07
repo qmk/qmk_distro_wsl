@@ -4,16 +4,13 @@ maybe_qmk_welcome () {
   local GREEN='\033[0;32m'
   local NC='\033[0m' # No Color
 
-  echo "Welcome to QMK WSL!"
-  echo "  * Documentation:    https://docs.qmk.fm"
-  echo "  * Support:          https://discord.gg/Uq7gcHh"
-
   if [ "$(qmk config user.hide_welcome | grep -c '=True')" == "0" ]; then
-    echo ""
-    echo "If you have not already done so,"
-    echo -e "  run ${YELLOW}qmk setup${NC} to get started."
-    echo -e "  run ${GREEN}qmk compile -kb <keyboard> -km default${NC} to start building."
-    echo -e "  run ${RED}qmk config user.hide_welcome=True${NC} to hide this message."
+    echo -e "${GREEN}Welcome to QMK WSL!${NC}"
+    echo -e "  * Documentation:    https://docs.qmk.fm"
+    echo -e "  * Support:          https://discord.gg/Uq7gcHh"
+    echo -e "  * Quickstart:       Run '${YELLOW}qmk-wizard${NC}'"
+    echo -e "  * Admin Menu:       Run '${RED}qmk-admin${NC}'"
+
   fi
 }
 

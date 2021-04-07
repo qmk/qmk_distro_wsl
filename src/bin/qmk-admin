@@ -12,7 +12,7 @@ Dialog.cls = lambda self: os.system('clear')
 
 d = Dialog(autowidgetsize=True)
 d.set_background_title('QMK Admin')
-d.add_persistent_args(['--no-lines', '--no-collapse', '--colors'])
+d.add_persistent_args(['--no-collapse', '--colors'])
 
 
 def menu_backup_enable():
@@ -51,6 +51,14 @@ def menu_update():
         d.msgbox("Complete!")
 
 
+def menu_welcome():
+    ans = d.yesno("Hide welcome message?")
+    if ans == 'ok':
+        os.system("qmk config user.hide_welcome=True")
+    else:
+        os.system("qmk config user.hide_welcome=")
+
+
 def menu_backup():
     _, tag = d.menu("Backup User Files",
                     choices=[('1', 'Configure Backup'), ('2', 'Perform Backup'), ('3', 'Restore Backup')])
@@ -66,15 +74,23 @@ def menu_backup():
     return True
 
 
+def menu_about():
+    d.tailbox("/etc/qmk-release")
+
+
 def menu_main():
     _, tag = d.menu("Welcome to QMK WSL!",
-                    choices=[('1', 'Backup/Restore'), ('2', 'Update System')])
+                    choices=[('1', 'Backup/Restore'), ('2', 'Welcome Message'), ('3', 'Update System'), ('4', 'Release Info')])
     if not tag:
         return False
     elif tag == '1':
         menu_backup()
     elif tag == '2':
+        menu_welcome()
+    elif tag == '3':
         menu_update()
+    elif tag == '4':
+        menu_about()
 
     return True
 

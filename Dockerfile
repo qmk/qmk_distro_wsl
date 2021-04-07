@@ -8,6 +8,7 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
     nano \
     procps \
     python3-dialog \
+    python3-fuzzywuzzy \
     rsync \
     sudo \
     vim \
