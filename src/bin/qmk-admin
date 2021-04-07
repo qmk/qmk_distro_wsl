@@ -54,10 +54,7 @@ def menu_update():
 
 def menu_welcome():
     ans = d.yesno("Hide welcome message?")
-    if ans == 'ok':
-        os.system("qmk config user.hide_welcome=True")
-    else:
-        os.system("qmk config user.hide_welcome=")
+    os.system(f"qmk config user.hide_welcome={ans == 'ok'}")
 
 
 def menu_backup():
