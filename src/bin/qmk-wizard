@@ -73,7 +73,7 @@ For example:
 
     keymaps_items = [(str(i), v) for i, v in enumerate(keymaps)]
 
-    ret, index = d.menu("Keymap?", choices=keymaps_items)
+    ret, index = d.menu("Keymap?", menu_height=10, choices=keymaps_items)
     if ret != Dialog.OK:
         continue
     km = keymaps[int(index)]

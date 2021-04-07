@@ -1,5 +1,6 @@
 #! /usr/bin/env python3
 import os
+import subprocess
 from dialog import Dialog
 from pathlib import Path
 
@@ -80,16 +81,19 @@ def menu_about():
 
 def menu_main():
     _, tag = d.menu("Welcome to QMK WSL!",
-                    choices=[('1', 'Backup/Restore'), ('2', 'Welcome Message'), ('3', 'Update System'), ('4', 'Release Info')])
+                    choices=[('1', 'Quickstart'), ('2', 'Backup/Restore'), ('3', 'Welcome Message'), ('4', 'Update System'), ('5', 'Release Info')])
     if not tag:
         return False
     elif tag == '1':
-        menu_backup()
+        subprocess.run("qmk-wizard", shell=True)
+        menu_backup_enable()
     elif tag == '2':
-        menu_welcome()
+        menu_backup()
     elif tag == '3':
-        menu_update()
+        menu_welcome()
     elif tag == '4':
+        menu_update()
+    elif tag == '5':
         menu_about()
 
     return True
