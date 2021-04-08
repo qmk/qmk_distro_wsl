@@ -16,6 +16,11 @@ d.set_background_title('QMK Admin')
 d.add_persistent_args(['--no-collapse', '--colors'])
 
 
+max_height, max_width = Dialog().maxsize()
+max_height //= 1.5
+max_width //= 1.5
+
+
 def menu_backup_enable():
     _, tag = d.menu("""Backup User Files
 
@@ -44,12 +49,11 @@ def menu_backup_restore():
 def menu_update():
     ans = d.yesno("Are you sure, this cannot be undone?")
     if ans == 'ok':
-        # TODO: redirect text to d.programbox instead of showing raw output
-        d.cls()
-        os.system('sudo apt update')
-        os.system('sudo apt upgrade -y')
-        os.system('sudo python3 -m pip install qmk --upgrade')
-        d.msgbox("Complete!")
+        ret = subprocess.Popen("""
+sudo apt update;
+sudo apt upgrade -y;
+sudo python3 -m pip install qmk --upgrade""", shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).stdout
+        d.programbox(text="\ZbRunning Update...\ZB", fd=ret.fileno(), height=int(max_height), width=int(max_width))
 
 
 def menu_welcome():
