@@ -4,6 +4,7 @@
 
 While currently a limitation of WSL, workarounds have been included for flashing the following:
 
+* avrdude
 * dfu-util
 * dfu-programmer
 * bootloadHid
