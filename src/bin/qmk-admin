@@ -6,7 +6,7 @@ from pathlib import Path
 
 
 # full path here as it *could* change filesystems between runs
-BACKUP_DOT_FILE = Path("/home/qmk/.qmk_backup_enable")
+BACKUP_DOT_FILE = Path('/home/qmk/.qmk_backup_enable')
 
 # Patch in clear screen support
 Dialog.cls = lambda self: os.system('clear')
@@ -47,22 +47,23 @@ def menu_backup_restore():
 
 
 def menu_update():
-    ans = d.yesno("Are you sure, this cannot be undone?")
-    if ans == 'ok':
+    ans = d.yesno('Are you sure, this cannot be undone?')
+    if ans == Dialog.OK:
         ret = subprocess.Popen("""
 sudo apt update;
 sudo apt upgrade -y;
 sudo python3 -m pip install qmk --upgrade""", shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).stdout
-        d.programbox(text="\ZbRunning Update...\ZB", fd=ret.fileno(), height=int(max_height), width=int(max_width))
+        d.programbox(text='\ZbRunning Update...\ZB', fd=ret.fileno(),
+                     height=int(max_height), width=int(max_width))
 
 
 def menu_welcome():
-    ans = d.yesno("Hide welcome message?")
-    os.system(f"qmk config user.hide_welcome={ans == 'ok'}")
+    ans = d.yesno('Hide welcome message?')
+    os.system(f"qmk config user.hide_welcome={ans == Dialog.OK}")
 
 
 def menu_backup():
-    _, tag = d.menu("Backup User Files",
+    _, tag = d.menu('Backup User Files',
                     choices=[('1', 'Configure Backup'), ('2', 'Perform Backup'), ('3', 'Restore Backup')])
     if not tag:
         return False
@@ -77,17 +78,21 @@ def menu_backup():
 
 
 def menu_about():
-    d.tailbox("/etc/qmk-release")
+    d.tailbox('/etc/qmk-release')
+
+
+def menu_quickstart():
+    subprocess.run('qmk-wizard', shell=True)
+    menu_backup_enable()
 
 
 def menu_main():
-    _, tag = d.menu("Welcome to QMK WSL!",
+    _, tag = d.menu('Welcome to QMK WSL!',
                     choices=[('1', 'Quickstart'), ('2', 'Backup/Restore'), ('3', 'Welcome Message'), ('4', 'Update System'), ('5', 'Release Info')])
     if not tag:
         return False
     elif tag == '1':
-        subprocess.run("qmk-wizard", shell=True)
-        menu_backup_enable()
+        menu_quickstart()
     elif tag == '2':
         menu_backup()
     elif tag == '3':
