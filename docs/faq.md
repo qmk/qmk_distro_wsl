@@ -36,15 +36,13 @@ wstart ~/qmk_firmware
 Due to limitations with WSL2, file access can be summarized as either:
 
 * Linux - fast but files are isolated and **might be lost** if not careful
-* Windows - **extremely slow** but files are generally safer
+* Windows - **extremely slow** but files are generally safer due to the single filesystem
 
-**Linux** is the recommended user (or QMK) home directory option with automatic backups enabled.
-
-This can re-configured with the 'Configure User' and 'Configure Backup' items within the `qmk-admin` TUI.
-
-Or, when running `qmk setup`, ensure that it is located inside the WSL instance instead of the Windows filesystem (ie. not in /mnt) with the `-H` option. 
+Is is recommended to use the **Linux** filesystem where possible. When running `qmk setup` manually, ensure that it is located inside the WSL instance instead of the Windows filesystem (ie. not in /mnt) with the `-H` option. 
 
 For more info see: https://docs.microsoft.com/en-us/windows/wsl/compare-versions
+
+For new users, it is also recommended to enable automatic backups. This can re-configured with the 'Backup/Restore' menu within the `qmk-admin` TUI.
 
 ## How do I keep my environment up to date?
 
