@@ -41,6 +41,27 @@ jobs:
         name: artifacts
         path: .build/*
 
+
+  drivers:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: Legion2/download-release-action@v2.1.0
+      with:
+        repository: qmk/qmk_driver_installer
+        tag: 'latest'
+        path: .build/
+        file: qmk_driver_installer.exe
+
+    - name: Download Config
+      run: |
+        sudo wget -P .build/ https://raw.githubusercontent.com/qmk/qmk_firmware/master/util/drivers.txt
+
+    - uses: actions/upload-artifact@v2
+      with:
+        name: artifacts
+        path: .build/*
+
   launcher:
     runs-on: ubuntu-latest
 
