@@ -41,12 +41,11 @@ Name: "installdrivers"; Description: "Install drivers"; GroupDescription: "Other
 
 [Files]
 Source: ".\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: "..\drivers\*"; DestDir: {tmp}; Flags: deleteafterinstall
 Source: "..\.build\*"; DestDir: "{app}"; Flags: ignoreversion
 
 [Run]
 Filename: "{app}\QMK.exe"; Parameters: "install"; StatusMsg: "Installing Distro..."; Flags: runhidden
-Filename: "{tmp}\qmk_driver_installer.exe"; WorkingDir: "{tmp}"; Parameters: " --all --force drivers.txt"; StatusMsg: "Installing Drivers..."; Tasks: installdrivers; Flags: runhidden
+Filename: "{app}\qmk_driver_installer.exe"; WorkingDir: "{app}"; Parameters: " --all --force drivers.txt"; StatusMsg: "Installing Drivers..."; Tasks: installdrivers; Flags: runhidden
 
 [UninstallRun]
 Filename: "{app}\QMK.exe"; Parameters: "run ""qmk-backup"""; StatusMsg: "Backing Up User Data..."; Flags: runhidden; RunOnceId: "backup"
