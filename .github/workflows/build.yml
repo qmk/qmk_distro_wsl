@@ -85,7 +85,7 @@ jobs:
   build:
     runs-on: windows-latest
 
-    needs: [root_fs, launcher]
+    needs: [root_fs, launcher, drivers]
 
     env:
       VERSION: ${{github.event.release.tag_name}}
