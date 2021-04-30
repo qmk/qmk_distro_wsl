@@ -145,23 +145,13 @@ jobs:
           name: installer
           path: .build
 
-      - uses: actions/upload-release-asset@v1
+      - uses: softprops/action-gh-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          upload_url: ${{ github.event.release.upload_url }}
-          asset_path: .build/QMK_WSL.exe
-          asset_name: QMK_WSL.exe
-          asset_content_type: application/octet-stream
-
-      - uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ github.event.release.upload_url }}
-          asset_path: .build/QMK_WSL.exe.sha256
-          asset_name: QMK_WSL.exe.sha256
-          asset_content_type: application/octet-stream
+          name: ${{ github.event.release.name }}
+          files: |
+            .build/*
 
   publish_beta:
     runs-on: ubuntu-latest
