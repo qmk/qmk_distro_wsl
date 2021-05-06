@@ -3,7 +3,8 @@ maybe_qmk_welcome () {
   local YELLOW='\033[1;33m'
   local NC='\033[0m' # No Color
 
-  if [ "$(qmk config user.hide_welcome | grep -c '=True')" == "0" ]; then
+  timeout 3 qmk config user.hide_welcome | grep 'user.hide_welcome=True' &> /dev/null
+  if [ "$?" != "0" ]; then
     echo -e "${RED}Welcome to QMK WSL!${NC}"
     echo -e "  * Documentation:    https://docs.qmk.fm"
     echo -e "  * Support:          https://discord.gg/Uq7gcHh"
