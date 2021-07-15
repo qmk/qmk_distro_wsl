@@ -20,8 +20,8 @@ RUN update-locale LANG=C.UTF-8
 
 RUN python3 -m pip install --upgrade milc qmk 
 
-RUN wget -O - https://access.patrickwu.space/wslu/public.asc | sudo apt-key add - && \
-    echo "deb https://access.patrickwu.space/wslu/debian buster main" | sudo tee -a /etc/apt/sources.list && \
+RUN wget -O - https://pkg.wslutiliti.es/public.key | sudo apt-key add - && \
+    echo "deb https://pkg.wslutiliti.es/debian buster main" | sudo tee -a /etc/apt/sources.list && \
     apt-get update && apt-get install --no-install-recommends -y wslu
 
 RUN groupadd qmk && \
