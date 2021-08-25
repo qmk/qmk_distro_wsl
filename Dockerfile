@@ -1,4 +1,4 @@
-FROM qmkfm/base_container
+FROM qmkfm/qmk_cli
 
 RUN apt-get update && apt-get install --no-install-recommends -y \
     cron \
@@ -17,8 +17,6 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
     && rm -rf /var/lib/apt/lists/*
 
 RUN update-locale LANG=C.UTF-8
-
-RUN python3 -m pip install --upgrade milc qmk 
 
 RUN wget -O - https://pkg.wslutiliti.es/public.key | sudo apt-key add - && \
     echo "deb https://pkg.wslutiliti.es/debian buster main" | sudo tee -a /etc/apt/sources.list && \
