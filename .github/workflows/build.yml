@@ -21,7 +21,7 @@ jobs:
       VERSION: ${{github.event.release.tag_name}}
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
 
     - name: Populate config
       run: |
@@ -91,7 +91,7 @@ jobs:
       VERSION: ${{github.event.release.tag_name}}
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - uses: actions/download-artifact@v2
         with:
