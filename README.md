@@ -3,7 +3,7 @@
 > A pre-configured WSL distro for working with the QMK CLI
 
 [![Latest Release](https://img.shields.io/github/v/release/qmk/qmk_distro_wsl?color=3D87CE&label=Latest&sort=semver&style=for-the-badge)](https://github.com/qmk/qmk_distro_wsl/releases/latest)
-[![GitHub Workflow Status](https://img.shields.io/github/workflow/status/qmk/qmk_distro_wsl/CI?logo=github&style=for-the-badge)](https://github.com/qmk/qmk_distro_wsl/actions?query=workflow%3ACI+branch%3Amain)
+[![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/qmk/qmk_distro_wsl/build.yml?logo=github&style=for-the-badge)](https://github.com/qmk/qmk_distro_wsl/actions?query=workflow%3ACI+branch%3Amain)
 [![Discord](https://img.shields.io/discord/440868230475677696.svg?logo=discord&logoColor=white&color=7289DA&style=for-the-badge)](https://discord.gg/Uq7gcHh)
 
 Based on the exact same environment as QMK uses for CI, this installer package aims to give you a QMK build environment with as little effort as possible.
