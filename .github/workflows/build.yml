@@ -70,13 +70,13 @@ jobs:
     - uses: Legion2/download-release-action@v2.1.0
       with:
         repository: yuk7/wsldl
-        tag: '21062500'
+        tag: '22020900'
         path: .build/
-        file: Launcher.exe
+        file: wsldl.exe
   
     - name: Configure Launcher
       run: |
-        sudo mv .build/Launcher.exe .build/QMK.exe
+        sudo mv .build/wsldl.exe .build/QMK.exe
 
     - uses: actions/upload-artifact@v3
       with:
