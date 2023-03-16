@@ -1,4 +1,4 @@
-FROM qmkfm/qmk_cli
+FROM ghcr.io/qmk/qmk_cli:latest
 
 RUN apt-get update && apt-get install --no-install-recommends -y \
     cron \
