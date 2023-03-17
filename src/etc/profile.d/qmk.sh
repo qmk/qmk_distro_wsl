@@ -13,7 +13,7 @@ maybe_qmk_welcome () {
 
   timeout 3 qmk config user.ignore_update_check | grep 'user.ignore_update_check=True' &> /dev/null
   if [ "$?" != "0" ]; then
-    LATEST_CLI=$(timeout 3 wget -qO- https://api.github.com/repos/qmk/qmk_cli/tags | jq '.[0].name' -r)
+    local LATEST_CLI=$(timeout 3 wget -qO- https://api.github.com/repos/qmk/qmk_cli/tags | jq '.[0].name' -r)
     echo $LATEST_CLI | grep -q $(qmk --version)
     if [ "$?" != "0" ]; then
       echo -e "  * Updates:          QMK CLI ${RED}${LATEST_CLI}${NC} available!"
