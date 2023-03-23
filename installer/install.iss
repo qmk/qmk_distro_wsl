@@ -56,6 +56,18 @@ Name: "{autoprograms}\{#MyAppName}"; Filename: "{app}\QMK.exe"; Parameters: ""; 
 Name: "{autodesktop}\{#MyAppName}"; Filename: "{app}\QMK.exe"; Parameters: ""; IconFilename: "{app}\icon.ico"; Tasks: desktopicon
 
 [Code]
+function IsWSLInstalled: boolean;
+begin
+  result := RegKeyExists(HKEY_CURRENT_USER,
+    'SOFTWARE\Microsoft\Windows\CurrentVersion\Lxss');
+end;
+
+function InitializeSetup: boolean;
+begin
+  result := IsWSLInstalled;
+  if not result then
+    MsgBox('WSL not detected. Install WSL and then run this installer again.', mbError, MB_OK);
+end;
 { ///////////////////////////////////////////////////////////////////// }
 function GetUninstallString(): String;
 var
