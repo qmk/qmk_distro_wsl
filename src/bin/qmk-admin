@@ -52,6 +52,7 @@ def menu_update():
         ret = subprocess.Popen("""
 sudo apt update;
 sudo apt upgrade -y;
+sudo python3 -m pip install --upgrade pip setuptools wheel
 sudo python3 -m pip install qmk --upgrade""", shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).stdout
         d.programbox(text='\ZbRunning Update...\ZB', fd=ret.fileno(),
                      height=int(max_height), width=int(max_width))
