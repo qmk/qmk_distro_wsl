@@ -18,6 +18,8 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
     apt-transport-https \
     && rm -rf /var/lib/apt/lists/*
 
+RUN python3 -m pip install --upgrade pip setuptools wheel
+
 RUN update-locale LANG=C.UTF-8
 
 RUN wget -O - https://pkg.wslutiliti.es/public.key | sudo apt-key add - && \
