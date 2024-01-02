@@ -110,7 +110,7 @@ jobs:
           name: installer
           path: .build/QMK_WSL.*
 
-      - uses: geekyeggo/delete-artifact@v2
+      - uses: geekyeggo/delete-artifact@v4
         with:
           name: artifacts
 
