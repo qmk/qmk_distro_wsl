@@ -24,6 +24,17 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
+    - name: Checkout flashing utils
+      uses: actions/checkout@v4
+      with:
+        repository: qmk/qmk_toolbox
+        sparse-checkout: windows
+        path: .build/qmk_toolbox
+
+    - name: Copy flashing utils
+      run: |
+        cp -r .build/qmk_toolbox/windows/QMK\ Toolbox/Resources/* src/usr/bin/
+
     - name: Populate config
       run: |
         echo "VERSION_ID=$GITHUB_SHA" >> src/etc/qmk-release
@@ -40,8 +51,7 @@ jobs:
     - uses: actions/upload-artifact@v4
       with:
         name: artifacts-rootfs
-        path: .build/*
-
+        path: .build/*.tar.gz
 
   drivers:
     runs-on: ubuntu-latest
