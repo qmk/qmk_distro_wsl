@@ -121,7 +121,7 @@ jobs:
           name: installer
           path: .build/QMK_WSL.*
 
-      - uses: geekyeggo/delete-artifact@v4
+      - uses: geekyeggo/delete-artifact@v5
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           name: artifacts-*
