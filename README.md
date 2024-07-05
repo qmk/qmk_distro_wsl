@@ -8,7 +8,7 @@
 
 Based on the exact same environment as QMK uses for CI, this installer package aims to give you a QMK build environment with as little effort as possible.
 
-![terminal example](./docs/.vuepress/public/terminal.png)
+![terminal example](./docs/public/terminal.png)
 
 ## Documentation
 
