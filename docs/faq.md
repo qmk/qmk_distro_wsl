@@ -21,7 +21,7 @@ Files within the WSL filesystem can be flashed directly by using
 
 For example,
 
-<img :src="$withBase('/wsl_toolbox.png')" alt="toolbox example" width="70%">
+![toolbox example"](/wsl_toolbox.png)
 
 ## How can I access my firmware files?
 
