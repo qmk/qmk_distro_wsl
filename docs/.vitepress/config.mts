@@ -1,8 +1,8 @@
 import { defineConfig } from "vitepress";
 
 export default defineConfig({
-    outDir: '../../.build/docs',
-    cacheDir: '../../.build/temp',
+    outDir: '../.build/docs',
+    cacheDir: '../.build/temp',
     cleanUrls: true,
 
     title: 'QMK WSL',
