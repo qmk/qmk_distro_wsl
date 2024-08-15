@@ -7,7 +7,7 @@ maybe_qmk_welcome () {
   if [ "$?" != "0" ]; then
     echo -e "${RED}Welcome to QMK WSL!${NC}"
     echo -e "  * Documentation:    https://docs.qmk.fm"
-    echo -e "  * Support:          https://discord.gg/Uq7gcHh"
+    echo -e "  * Support:          https://discord.gg/qmk"
     echo -e "  * Quickstart:       Run '${YELLOW}qmk-admin${NC}'"
   fi
 
