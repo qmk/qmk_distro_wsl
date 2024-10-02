@@ -52,6 +52,7 @@ jobs:
       with:
         name: artifacts-rootfs
         path: .build/*.tar.gz
+        include-hidden-files: true
 
   drivers:
     runs-on: ubuntu-latest
@@ -72,6 +73,7 @@ jobs:
       with:
         name: artifacts-drivers
         path: .build/*
+        include-hidden-files: true
 
   launcher:
     runs-on: ubuntu-latest
@@ -92,6 +94,7 @@ jobs:
       with:
         name: artifacts-launcher
         path: .build/*
+        include-hidden-files: true
 
   build:
     runs-on: windows-latest
@@ -120,6 +123,7 @@ jobs:
         with:
           name: installer
           path: .build/QMK_WSL.*
+          include-hidden-files: true
 
       - uses: geekyeggo/delete-artifact@v5
         with:
