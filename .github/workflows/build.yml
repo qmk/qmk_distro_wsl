@@ -127,7 +127,6 @@ jobs:
 
       - uses: geekyeggo/delete-artifact@v5
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
           name: artifacts-*
 
   test:
