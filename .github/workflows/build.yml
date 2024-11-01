@@ -34,6 +34,7 @@ jobs:
     - name: Copy flashing utils
       run: |
         cp -r .build/qmk_toolbox/windows/QMK\ Toolbox/Resources/*.{exe,dll} src/usr/bin/
+        chmod +x src/usr/bin/*.{exe,dll}
         rm -f src/usr/bin/qmk_driver_installer.exe
 
     - name: Populate config
