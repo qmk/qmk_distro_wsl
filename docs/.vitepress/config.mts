@@ -8,10 +8,10 @@ export default defineConfig({
     title: 'QMK WSL',
     description: 'A pre-configured WSL distro for working with the QMK CLI',
 
-    head: [['link', { rel: 'icon', href: '/logo.png' }]],
+    head: [['link', { rel: 'icon', href: '/logo.svg' }]],
 
     themeConfig: {
-        logo: '/logo.png',
+        logo: '/logo.svg',
         sidebar: [
             { text: 'Getting Started', link: '/guide' },
             { text: 'Frequently Asked Questions', link: '/faq' },

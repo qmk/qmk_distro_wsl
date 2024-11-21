@@ -4,7 +4,7 @@ hero:
   name: QMK WSL
   tagline: A pre-configured WSL distro for working with the QMK CLI
   image:
-    src: /logo.png
+    src: /logo.svg
   actions:
     - theme: brand
       text: Get Started →
