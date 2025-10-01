@@ -99,7 +99,7 @@ jobs:
         include-hidden-files: true
 
   build:
-    runs-on: windows-latest
+    runs-on: windows-2022
 
     needs: [root_fs, launcher, drivers]
 
