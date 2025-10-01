@@ -22,10 +22,10 @@ jobs:
       VERSION: ${{github.event.release.tag_name}}
 
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v5
 
     - name: Checkout flashing utils
-      uses: actions/checkout@v4
+      uses: actions/checkout@v5
       with:
         repository: qmk/qmk_toolbox
         sparse-checkout: windows
@@ -107,7 +107,7 @@ jobs:
       VERSION: ${{github.event.release.tag_name}}
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - uses: actions/download-artifact@v4
         with:
