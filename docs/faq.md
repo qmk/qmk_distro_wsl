@@ -28,7 +28,7 @@ For example,
 Within the WSL shell, you can run the following command to start browsing
 
 ```console
-wstart ~/qmk_firmware
+explorer.exe $(wslpath -w ~/qmk_firmware)
 ```
 
 ## Why is `<action>` so slow?
