@@ -22,10 +22,6 @@ RUN python3 -m pip install --upgrade pip setuptools wheel
 
 RUN update-locale LANG=C.UTF-8
 
-RUN wget -O - https://pkg.wslutiliti.es/public.key | sudo apt-key add - && \
-    echo "deb https://pkg.wslutiliti.es/debian buster main" | sudo tee -a /etc/apt/sources.list && \
-    apt-get update && apt-get install --no-install-recommends -y wslu
-
 RUN groupadd qmk && \
     useradd -m -g qmk -s /bin/bash -p $(openssl passwd -1 'qmk') qmk
 
