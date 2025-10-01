@@ -2,7 +2,7 @@
 import os
 import argparse
 
-TEMP_DIR = os.popen('wslupath -T').read().strip()
+TEMP_DIR = os.popen("wslpath -u $(powershell.exe '$env:TMP')").read().strip()
 
 BACKUP_SRC = '/home/qmk'
 BACKUP_DEST = os.getenv('BACKUP_DEST', f'{TEMP_DIR}/qmk_wsl_backup')
