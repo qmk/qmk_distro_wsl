@@ -24,10 +24,13 @@ jobs:
     steps:
     - uses: actions/checkout@v5
 
+    - uses: falti/dotenv-action@v1.1.4
+      id: dotenv
+
     - name: Copy flashing utils
       working-directory: src/usr/bin/
       run: |
-        wget https://github.com/qmk/qmk_flashutils/releases/download/20250906/qmk_flashutils-20250906-windowsX64.tar.zst -O - | tar --zstd -xvf -
+        wget ${{ steps.dotenv.outputs.qmk_flashutils_url }} -O - | tar --zstd -xvf -
 
     - name: Populate config
       run: |
