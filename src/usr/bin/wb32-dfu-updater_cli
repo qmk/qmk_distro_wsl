@@ -1,2 +1,0 @@
-#!/bin/bash
-wb32-dfu-updater_cli.exe "$@"
