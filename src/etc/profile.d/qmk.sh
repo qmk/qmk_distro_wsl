@@ -22,7 +22,7 @@ maybe_qmk_welcome () {
 }
 
 # Handle bootstrap install location
-export PATH=/opt/qmk/bin:/opt/uv/tools/qmk/bin:$PATH
+export PATH=/opt/qmk/bin:$PATH
 export QMK_DISTRIB_DIR=/opt/qmk
 
 maybe_qmk_welcome

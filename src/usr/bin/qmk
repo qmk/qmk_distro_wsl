@@ -1,0 +1,5 @@
+#!/bin/bash
+
+export PATH=/opt/uv/tools/qmk/bin:$PATH
+
+/opt/uv/tools/qmk/bin/qmk "$@"
