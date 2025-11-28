@@ -1,0 +1,2 @@
+#!/bin/bash
+hid_listen.exe "$@"
