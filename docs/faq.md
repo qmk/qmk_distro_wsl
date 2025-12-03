@@ -53,7 +53,7 @@ Interim updates have to be performed manually. This can done with the 'Update Sy
 ```console
 sudo apt update
 sudo apt upgrade -y
-sudo python3 -m pip install qmk --upgrade
+sudo /bin/bash -c 'curl -fsSL https://install.qmk.fm | UV_PYTHON_INSTALL_DIR=/opt/uv/bin sh -s -- --confirm --uv-install-dir=/usr/local/bin --uv-tool-dir=/opt/uv/tools --qmk-distrib-dir=/opt/qmk'
 ```
 
 ## More Coming Soon...

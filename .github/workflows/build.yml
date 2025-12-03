@@ -22,20 +22,16 @@ jobs:
       VERSION: ${{github.event.release.tag_name}}
 
     steps:
-    - uses: actions/checkout@v5
+    - uses: actions/checkout@v6
 
-    - name: Checkout flashing utils
-      uses: actions/checkout@v5
-      with:
-        repository: qmk/qmk_toolbox
-        sparse-checkout: windows
-        path: .build/qmk_toolbox
+    - uses: falti/dotenv-action@v1.1.5
+      id: dotenv
 
     - name: Copy flashing utils
       run: |
-        cp -r .build/qmk_toolbox/windows/QMK\ Toolbox/Resources/*.{exe,dll} src/usr/bin/
-        chmod +x src/usr/bin/*.{exe,dll}
-        rm -f src/usr/bin/qmk_driver_installer.exe
+        mkdir -p src/opt/qmk/bin
+        pushd src/opt/qmk/bin
+        wget ${{ steps.dotenv.outputs.qmk_flashutils_url }} -O - | tar --zstd -xvf -
 
     - name: Populate config
       run: |
@@ -107,7 +103,7 @@ jobs:
       VERSION: ${{github.event.release.tag_name}}
 
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
 
       - uses: actions/download-artifact@v6
         with:
@@ -148,7 +144,7 @@ jobs:
       - name: Run QMK cli
         shell: cmd
         run: |
-          wsl -d QMK -u root -- bash -c "qmk -h | grep 'CLI wrapper for running QMK commands'"
+          wsl -d QMK -u root -- bash -l -c "qmk -h | grep 'CLI wrapper for running QMK commands'"
 
   publish_release:
     runs-on: ubuntu-latest

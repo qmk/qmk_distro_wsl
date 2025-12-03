@@ -21,6 +21,10 @@ maybe_qmk_welcome () {
   fi
 }
 
+# Handle bootstrap install location
+export PATH=/opt/qmk/bin:$PATH
+export QMK_DISTRIB_DIR=/opt/qmk
+
 maybe_qmk_welcome
 
 # Fix initial directory on Windows Terminal
