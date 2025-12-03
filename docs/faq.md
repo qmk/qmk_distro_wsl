@@ -31,6 +31,12 @@ Within the WSL shell, you can run the following command to start browsing
 explorer.exe $(wslpath -w ~/qmk_firmware)
 ```
 
+## Why does `qmk console` find no devices?
+
+Due to limitations with WSL2, HID devices are available to the Linux distribution.
+
+The recommendation is to use `hid_listen` instead, where workarounds are already in place for it to function correctly.
+
 ## Why is `<action>` so slow?
 
 Due to limitations with WSL2, file access can be summarized as either:
