@@ -46,7 +46,7 @@ jobs:
       run: |
         docker export $(docker create qmkfm/qmk_distro_wsl:latest) | gzip > .build/install.tar.gz
 
-    - uses: actions/upload-artifact@v5
+    - uses: actions/upload-artifact@v6
       with:
         name: artifacts-rootfs
         path: .build/*.tar.gz
@@ -67,7 +67,7 @@ jobs:
       run: |
         sudo wget -P .build/ https://raw.githubusercontent.com/qmk/qmk_firmware/master/util/drivers.txt
 
-    - uses: actions/upload-artifact@v5
+    - uses: actions/upload-artifact@v6
       with:
         name: artifacts-drivers
         path: .build/*
@@ -88,7 +88,7 @@ jobs:
       run: |
         sudo mv .build/wsldl.exe .build/QMK.exe
 
-    - uses: actions/upload-artifact@v5
+    - uses: actions/upload-artifact@v6
       with:
         name: artifacts-launcher
         path: .build/*
@@ -117,7 +117,7 @@ jobs:
           iscc installer/install.iss //DMyAppVersion=${VERSION:-0.0.0}
           sha256sum .build/QMK_WSL.exe > .build/QMK_WSL.exe.sha256
 
-      - uses: actions/upload-artifact@v5
+      - uses: actions/upload-artifact@v6
         with:
           name: installer
           path: .build/QMK_WSL.*
