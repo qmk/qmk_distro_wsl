@@ -175,6 +175,10 @@ jobs:
     if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
 
     steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-tags: true
+
       - uses: actions/download-artifact@v7
         with:
           name: installer
@@ -189,8 +193,8 @@ jobs:
         with:
           token: "${{ secrets.GITHUB_TOKEN }}"
           tag_name: "beta"
-          draft: false
           prerelease: true
           name: "Latest Beta"
           files: |
-            .build/*
+            .build/*.exe
+            .build/*.exe.sha256
