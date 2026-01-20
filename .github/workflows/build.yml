@@ -115,6 +115,19 @@ jobs:
         shell: 'bash {0}'
         run: |
           iscc installer/install.iss //DMyAppVersion=${VERSION:-0.0.0}
+
+      - uses: dlemstra/code-sign-action@v1
+        if: github.event_name != 'pull_request'
+        with:
+          certificate: '${{ secrets.WINDOWS_CERTIFICATE }}'
+          password: '${{ secrets.WINDOWS_CERTIFICATE_PASSWORD }}'
+          folder: './windows'
+          files: |
+            QMK_WSL.exe
+
+      - name: Create Hash
+        shell: 'bash {0}'
+        run: |
           sha256sum .build/QMK_WSL.exe > .build/QMK_WSL.exe.sha256
 
       - uses: actions/upload-artifact@v6
