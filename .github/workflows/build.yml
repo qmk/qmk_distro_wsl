@@ -46,10 +46,10 @@ jobs:
       run: |
         docker export $(docker create qmkfm/qmk_distro_wsl:latest) | gzip > .build/install.tar.gz
 
-    - uses: actions/upload-artifact@v6
+    - uses: actions/upload-artifact@v7
       with:
-        name: artifacts-rootfs
         path: .build/*.tar.gz
+        archive: false
         include-hidden-files: true
 
   drivers:
@@ -67,9 +67,9 @@ jobs:
       run: |
         sudo wget -P .build/ https://raw.githubusercontent.com/qmk/qmk_firmware/master/util/drivers.txt
 
-    - uses: actions/upload-artifact@v6
+    - uses: actions/upload-artifact@v7
       with:
-        name: artifacts-drivers
+        name: drivers.zip
         path: .build/*
         include-hidden-files: true
 
@@ -88,10 +88,10 @@ jobs:
       run: |
         sudo mv .build/wsldl.exe .build/QMK.exe
 
-    - uses: actions/upload-artifact@v6
+    - uses: actions/upload-artifact@v7
       with:
-        name: artifacts-launcher
         path: .build/*
+        archive: false
         include-hidden-files: true
 
   build:
@@ -105,27 +105,25 @@ jobs:
     steps:
       - uses: actions/checkout@v6
 
-      - uses: actions/download-artifact@v7
+      - uses: actions/download-artifact@v8
         with:
           path: .build
-          pattern: artifacts-*
           merge-multiple: true
 
       - name: Create Installer
         shell: 'bash {0}'
         run: |
           iscc installer/install.iss //DMyAppVersion=${VERSION:-0.0.0}
-          sha256sum .build/QMK_WSL.exe > .build/QMK_WSL.exe.sha256
-
-      - uses: actions/upload-artifact@v6
-        with:
-          name: installer
-          path: .build/QMK_WSL.*
-          include-hidden-files: true
 
       - uses: geekyeggo/delete-artifact@v5
         with:
-          name: artifacts-*
+          name: '*'
+
+      - uses: actions/upload-artifact@v7
+        with:
+          path: .build/QMK_WSL.*
+          archive: false
+          include-hidden-files: true
 
   test:
     runs-on: windows-latest
@@ -133,9 +131,7 @@ jobs:
     needs: [build]
 
     steps:
-      - uses: actions/download-artifact@v7
-        with:
-          name: installer
+      - uses: actions/download-artifact@v8
 
       - name: Run Install
         run: |
@@ -154,10 +150,14 @@ jobs:
     if: github.event.release.tag_name
 
     steps:
-      - uses: actions/download-artifact@v7
+      - uses: actions/download-artifact@v8
         with:
-          name: installer
           path: .build
+
+      - name: Create Hash
+        shell: 'bash {0}'
+        run: |
+          sha256sum .build/QMK_WSL.exe > .build/QMK_WSL.exe.sha256
 
       - uses: softprops/action-gh-release@v2
         env:
@@ -179,10 +179,14 @@ jobs:
         with:
           fetch-tags: true
 
-      - uses: actions/download-artifact@v7
+      - uses: actions/download-artifact@v8
         with:
-          name: installer
           path: .build
+
+      - name: Create Hash
+        shell: 'bash {0}'
+        run: |
+          sha256sum .build/QMK_WSL.exe > .build/QMK_WSL.exe.sha256
 
       - name: Delete release
         run: gh release delete beta --cleanup-tag || true
