@@ -46,10 +46,11 @@ jobs:
       run: |
         docker export $(docker create qmkfm/qmk_distro_wsl:latest) | gzip > .build/install.tar.gz
 
-    - uses: actions/upload-artifact@v6
+    - uses: actions/upload-artifact@v7
       with:
         name: artifacts-rootfs
         path: .build/*.tar.gz
+        archive: false
         include-hidden-files: true
 
   drivers:
@@ -67,7 +68,7 @@ jobs:
       run: |
         sudo wget -P .build/ https://raw.githubusercontent.com/qmk/qmk_firmware/master/util/drivers.txt
 
-    - uses: actions/upload-artifact@v6
+    - uses: actions/upload-artifact@v7
       with:
         name: artifacts-drivers
         path: .build/*
@@ -88,10 +89,11 @@ jobs:
       run: |
         sudo mv .build/wsldl.exe .build/QMK.exe
 
-    - uses: actions/upload-artifact@v6
+    - uses: actions/upload-artifact@v7
       with:
         name: artifacts-launcher
         path: .build/*
+        archive: false
         include-hidden-files: true
 
   build:
@@ -105,7 +107,7 @@ jobs:
     steps:
       - uses: actions/checkout@v6
 
-      - uses: actions/download-artifact@v7
+      - uses: actions/download-artifact@v8
         with:
           path: .build
           pattern: artifacts-*
@@ -117,7 +119,7 @@ jobs:
           iscc installer/install.iss //DMyAppVersion=${VERSION:-0.0.0}
           sha256sum .build/QMK_WSL.exe > .build/QMK_WSL.exe.sha256
 
-      - uses: actions/upload-artifact@v6
+      - uses: actions/upload-artifact@v7
         with:
           name: installer
           path: .build/QMK_WSL.*
@@ -133,7 +135,7 @@ jobs:
     needs: [build]
 
     steps:
-      - uses: actions/download-artifact@v7
+      - uses: actions/download-artifact@v8
         with:
           name: installer
 
@@ -154,7 +156,7 @@ jobs:
     if: github.event.release.tag_name
 
     steps:
-      - uses: actions/download-artifact@v7
+      - uses: actions/download-artifact@v8
         with:
           name: installer
           path: .build
@@ -179,7 +181,7 @@ jobs:
         with:
           fetch-tags: true
 
-      - uses: actions/download-artifact@v7
+      - uses: actions/download-artifact@v8
         with:
           name: installer
           path: .build
