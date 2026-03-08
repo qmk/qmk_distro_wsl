@@ -110,24 +110,23 @@ jobs:
       - uses: actions/download-artifact@v8
         with:
           path: .build
-          pattern: artifacts-*
           merge-multiple: true
 
       - name: Create Installer
         shell: 'bash {0}'
         run: |
           iscc installer/install.iss //DMyAppVersion=${VERSION:-0.0.0}
-          sha256sum .build/QMK_WSL.exe > .build/QMK_WSL.exe.sha256
+
+      - uses: geekyeggo/delete-artifact@v5
+        with:
+          name: '*'
 
       - uses: actions/upload-artifact@v7
         with:
           name: installer
           path: .build/QMK_WSL.*
+          archive: false
           include-hidden-files: true
-
-      - uses: geekyeggo/delete-artifact@v5
-        with:
-          name: artifacts-*
 
   test:
     runs-on: windows-latest
@@ -158,8 +157,12 @@ jobs:
     steps:
       - uses: actions/download-artifact@v8
         with:
-          name: installer
           path: .build
+
+      - name: Create Hash
+        shell: 'bash {0}'
+        run: |
+          sha256sum .build/QMK_WSL.exe > .build/QMK_WSL.exe.sha256
 
       - uses: softprops/action-gh-release@v2
         env:
@@ -183,8 +186,12 @@ jobs:
 
       - uses: actions/download-artifact@v8
         with:
-          name: installer
           path: .build
+
+      - name: Create Hash
+        shell: 'bash {0}'
+        run: |
+          sha256sum .build/QMK_WSL.exe > .build/QMK_WSL.exe.sha256
 
       - name: Delete release
         run: gh release delete beta --cleanup-tag || true
