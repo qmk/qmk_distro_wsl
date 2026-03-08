@@ -48,7 +48,6 @@ jobs:
 
     - uses: actions/upload-artifact@v7
       with:
-        name: artifacts-rootfs
         path: .build/*.tar.gz
         archive: false
         include-hidden-files: true
@@ -70,7 +69,7 @@ jobs:
 
     - uses: actions/upload-artifact@v7
       with:
-        name: artifacts-drivers
+        name: drivers.zip
         path: .build/*
         include-hidden-files: true
 
@@ -91,7 +90,6 @@ jobs:
 
     - uses: actions/upload-artifact@v7
       with:
-        name: artifacts-launcher
         path: .build/*
         archive: false
         include-hidden-files: true
@@ -123,7 +121,6 @@ jobs:
 
       - uses: actions/upload-artifact@v7
         with:
-          name: installer
           path: .build/QMK_WSL.*
           archive: false
           include-hidden-files: true
@@ -135,8 +132,6 @@ jobs:
 
     steps:
       - uses: actions/download-artifact@v8
-        with:
-          name: installer
 
       - name: Run Install
         run: |
