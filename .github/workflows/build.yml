@@ -22,7 +22,7 @@ jobs:
       VERSION: ${{github.event.release.tag_name}}
 
     steps:
-    - uses: actions/checkout@v6
+    - uses: actions/checkout@v7
 
     - uses: falti/dotenv-action@v1.2.1
       id: dotenv
@@ -103,7 +103,7 @@ jobs:
       VERSION: ${{github.event.release.tag_name}}
 
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
 
       - uses: actions/download-artifact@v8
         with:
@@ -175,7 +175,7 @@ jobs:
     if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
 
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
         with:
           fetch-tags: true
 
