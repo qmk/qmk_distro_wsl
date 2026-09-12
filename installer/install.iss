@@ -22,8 +22,7 @@ AppSupportURL={#MyAppURL}
 AppUpdatesURL={#MyAppURL}
 DefaultDirName={userappdata}\{#MyAppDir}
 DisableProgramGroupPage=yes
-; Uncomment the following line to run in non administrative install mode (install for current user only.)
-;PrivilegesRequired=lowest
+PrivilegesRequired=lowest
 OutputDir=..\.build
 OutputBaseFilename={#MyAppDir}
 SetupIconFile=icon.ico
@@ -45,7 +44,7 @@ Source: "..\.build\*"; DestDir: "{app}"; Flags: ignoreversion
 
 [Run]
 Filename: "{app}\QMK.exe"; Parameters: "install"; StatusMsg: "Installing Distro..."; Flags: runhidden
-Filename: "{app}\qmk_driver_installer.exe"; WorkingDir: "{app}"; Parameters: " --all --force drivers.txt"; StatusMsg: "Installing Drivers..."; Tasks: installdrivers; Flags: runhidden
+Filename: "{app}\qmk_driver_installer.exe"; WorkingDir: "{app}"; Parameters: " --all --force drivers.txt"; StatusMsg: "Installing Drivers..."; Tasks: installdrivers; Flags: runhidden shellexec waituntilterminated
 
 [UninstallRun]
 Filename: "{app}\QMK.exe"; Parameters: "run ""qmk-backup"""; StatusMsg: "Backing Up User Data..."; Flags: runhidden; RunOnceId: "backup"
